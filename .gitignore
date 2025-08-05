@@ -1,0 +1,36 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyo
+
+# === Virtual Environment ===
+.env/
+.venv/
+env/
+venv/
+ENV/
+
+# === VSCode ===
+.vscode/
+
+# === PyCharm ===
+.idea/
+
+# === MacOS ===
+.DS_Store
+
+# === Log & Database Files ===
+*.log
+*.sqlite3
+
+# === Jupyter Notebook Checkpoints ===
+.ipynb_checkpoints/
+
+# === Private files (optional) ===
+secrets.json
+config.yaml
