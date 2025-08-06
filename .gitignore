@@ -3,6 +3,10 @@
 *.env
 .env.*
 
+# ENVIRONMENT FOLDERS
+.venv/
+
+
 # PYTHON
 __pycache__/
 *.py[cod]
