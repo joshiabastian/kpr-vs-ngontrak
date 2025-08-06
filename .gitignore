@@ -1,36 +1,48 @@
-# === Python ===
+# ENVIRONMENT & CONFIG
+.env
+*.env
+.env.*
+
+# PYTHON
 __pycache__/
 *.py[cod]
+*.so
 *.egg
 *.egg-info/
 dist/
 build/
-.eggs/
+pip-wheel-metadata/
+*.pyd
 *.pyo
 
-# === Virtual Environment ===
-.env/
-.venv/
-env/
-venv/
-ENV/
+# JUPYTER
+.ipynb_checkpoints
 
-# === VSCode ===
+# VSCODE / IDE
 .vscode/
-
-# === PyCharm ===
 .idea/
 
-# === MacOS ===
-.DS_Store
-
-# === Log & Database Files ===
-*.log
+# DATABASE / SQLITE (jaga-jaga)
+*.db
 *.sqlite3
 
-# === Jupyter Notebook Checkpoints ===
-.ipynb_checkpoints/
+# LOG / TEMP FILES
+*.log
+*.bak
+*.tmp
 
-# === Private files (optional) ===
-secrets.json
-config.yaml
+# OS / SYSTEM FILES
+.DS_Store
+Thumbs.db
+
+# TEST / COVERAGE
+coverage/
+*.cover
+*.py,cover
+.hypothesis/
+
+# GIT BACKUP
+*.orig
+
+# OTHER (if using Streamlit or web)
+node_modules/
