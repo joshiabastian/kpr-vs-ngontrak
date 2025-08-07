@@ -5,7 +5,7 @@
 
 # ENVIRONMENT FOLDERS
 .venv/
-
+venv/
 
 # PYTHON
 __pycache__/
