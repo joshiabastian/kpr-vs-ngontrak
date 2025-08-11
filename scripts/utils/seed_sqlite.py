@@ -3,9 +3,9 @@ import glob
 import os
 
 # Path database SQLite
-DB_PATH = r"D:\bymacho\kpr-vs-ngontrak\db\kpr_vs_ngontrak_sqlite.db"  # sesuaikan sama lokasi file .db lu
+DB_PATH = r"D:\analisa-project\github\kpr-vs-ngontrak\db\kpr_vs_ngontrak_sqlite.db" 
 # Folder berisi seed SQL
-SEED_FOLDER = r"D:\bymacho\kpr-vs-ngontrak\db\seed"
+SEED_FOLDER = r"D:\analisa-project\github\kpr-vs-ngontrak\db\seed"
 
 def convert_postgres_to_sqlite(sql):
     """
