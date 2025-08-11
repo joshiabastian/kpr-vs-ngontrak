@@ -1,14 +1,22 @@
-import sqlite3
 import os
+import sqlite3
 from dotenv import load_dotenv
 
-# Load variabel dari .env
+# Load .env
 load_dotenv()
 
-# Ambil path DB dari .env
 DB_PATH = os.getenv("SQLITE_DB_PATH")
-if not DB_PATH:
-    raise ValueError("SQLITE_DB_PATH belum di-set di file .env")
+SCHEMA_PATH = os.getenv("SCHEMA_PATH")
+SEED_PATH = os.getenv("SEED_PATH")
+
+def get_sqlite_connection():
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        print(f"[INFO] Koneksi SQLite berhasil: {DB_PATH}")
+        return conn
+    except sqlite3.Error as e:
+        print(f"[ERROR] Gagal konek SQLite: {e}")
+        return None
 
 def run_sql_file(conn, filepath):
     """Jalankan semua query SQL dari file."""
@@ -16,36 +24,31 @@ def run_sql_file(conn, filepath):
         sql_script = f.read()
     conn.executescript(sql_script)
     conn.commit()
+    print(f"[INFO] Berhasil eksekusi: {filepath}")
 
-def etl_sqlite():
-    """Inisialisasi DB SQLite, load schema & seed data."""
-    print(f"[INFO] Menghubungkan ke database: {DB_PATH}")
-    conn = sqlite3.connect(DB_PATH)
+def initialize_database():
+    """Buat DB baru kalau belum ada, lalu load schema & seed."""
+    is_new_db = not os.path.exists(DB_PATH)
 
-    # Load schema
-    schema_path = os.path.join("db", "init_schema.sql")
-    if os.path.exists(schema_path):
-        print("[INFO] Memuat schema database...")
-        run_sql_file(conn, schema_path)
+    conn = get_sqlite_connection()
+    if conn is None:
+        return
+
+    if is_new_db:
+        print("[INFO] Database baru dibuat, inisialisasi schema & seed...")
+        run_sql_file(conn, SCHEMA_PATH)
+
+        # Load semua file seed di folder SEED_PATH
+        for file_name in sorted(os.listdir(SEED_PATH)):
+            if file_name.endswith(".sql"):
+                file_path = os.path.join(SEED_PATH, file_name)
+                run_sql_file(conn, file_path)
+        print("[INFO] Schema & seed selesai di-load.")
     else:
-        print("[WARNING] Schema file tidak ditemukan!")
-
-    # Load seed data
-    seed_path = os.path.join("db", "seed_data.sql")
-    if os.path.exists(seed_path):
-        print("[INFO] Memuat dummy data...")
-        run_sql_file(conn, seed_path)
-    else:
-        print("[WARNING] Seed data file tidak ditemukan!")
-
-    # Cek tabel
-    print("[INFO] Daftar tabel di database:")
-    cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table'")
-    for row in cursor.fetchall():
-        print(f" - {row[0]}")
+        print("[INFO] Database sudah ada, skip inisialisasi.")
 
     conn.close()
-    print("[INFO] ETL selesai.")
+    print("[INFO] Koneksi ditutup.")
 
 if __name__ == "__main__":
-    etl_sqlite()
+    initialize_database()
