@@ -1,15 +1,19 @@
 import os
 import sqlite3
 from dotenv import load_dotenv
+import sys
 
 # Load .env
 load_dotenv()
 
 # Fallback values kalau .env kosong
-DB_PATH = os.getenv("SQLITE_DB_PATH", "./db/kpr_vs_ngontrak_sqlite.db")
-SCHEMA_PATH = os.getenv("SCHEMA_PATH", "./db/init_schema_sqlite.sql")
-SEED_PATH = os.getenv("SEED_PATH", "./db/seed")
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.join(script_dir, "../..")  # Go up 2 levels
+
+DB_PATH = os.path.join(project_root, "db", "kpr_vs_ngontrak_sqlite.db")
+SCHEMA_PATH = os.path.join(project_root, "db", "init_schema.sql")
+SEED_PATH = os.path.join(project_root, "db", "seed")
 
 def ensure_directory_exists(filepath):
     """Pastikan directory untuk file exists."""
