@@ -9,7 +9,7 @@ load_dotenv()
 # Fallback values kalau .env kosong
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.join(script_dir, "../..")  # Go up 2 levels
+project_root = os.path.join(script_dir, "..\..")  # Go up 2 levels
 
 DB_PATH = os.path.join(project_root, "db", "kpr_vs_ngontrak_sqlite.db")
 SCHEMA_PATH = os.path.join(project_root, "db", "init_schema.sql")
